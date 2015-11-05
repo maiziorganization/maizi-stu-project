@@ -3,8 +3,7 @@
 
 2、大家需要在dev分支下面建立各自的分支，需要提交时合并到dev分支再提交；
 
-3、开发环境统一用virtualenv搭建，具体需要安装模块参考requirement.txt，可切换到虚拟环境目录，使用命令pip install -r
-requirement.txt快速安装相应模块；或者如果是win7 64位可直接拷贝Study/maizi_venv.zip进行解压使用该虚拟环境包。
+3、开发环境统一用virtualenv搭建，具体需要安装模块参考requirement.txt，可切换到虚拟环境目录，使用命令pip install -r requirement.txt快速安装相应模块；可参考Study目录下对应的参照说明文档。
 
 4、代码说明：
 

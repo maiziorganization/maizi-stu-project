@@ -134,13 +134,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,  'static'),
-)
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR,'uploads'),
+]
+
+#图片及其他媒体文件文件可以上传可下载浏览器路径
+MEDIA_URL = '/uploads/'
+#在项目目录下加载媒体文件目录
+MEDIA_ROOT = os.path.join(BASE_DIR,'uploads')
+#自定义用户model,只适用于对用户继承Django的原生用户模块时
+AUTH_USER_MODEL = 'common.UserProfile'
+#网站配置信息在blog.views.global_setting方法中使用
+SITE_URL = 'http://127.0.0.1:8000/'
+SITE_NAME = '沈佳巍的个人博客'
+SITE_DESC = '专注Python开发'
 
 
-# define
-AUTH_USER_MODEL = "common.UserProfile"
 
 #日志配置
 LOGGING = {

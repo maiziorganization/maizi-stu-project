@@ -9,5 +9,5 @@ course模块的url配置。
 
 from django.conf.urls import patterns
 
-urlpatterns = patterns('course.views',
-)
+urlpatterns = []
+

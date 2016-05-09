@@ -28,7 +28,7 @@ urlpatterns = [
         {"document_root":settings.MEDIA_ROOT,}),
  #   url(r'^admin/upload/(?P<dir_name>[^/]+)$',upload_image,name='upload_image'),
     url(r'^admin/', admin.site.urls),
-    url(r'^$',include('maizi.common.urls')),
-    url(r'^course/',include('maizi.course.urls')),
-    url(r'^users/',include('maizi.users.urls'))
+    url(r'^',include('maizi.common.urls')),
+    # url(r'^course/',include('maizi.course.urls')),
+    # url(r'^users/',include('maizi.users.urls'))
 ]

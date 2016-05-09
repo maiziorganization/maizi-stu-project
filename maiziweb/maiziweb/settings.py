@@ -73,6 +73,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                #利用maizi.common.views.global_setting做为全局返回值
+                'maizi.common.views.global_setting'
             ],
         },
     },
@@ -147,8 +149,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'uploads')
 AUTH_USER_MODEL = 'common.UserProfile'
 #网站配置信息在blog.views.global_setting方法中使用
 SITE_URL = 'http://127.0.0.1:8000/'
-SITE_NAME = '沈佳巍的个人博客'
-SITE_DESC = '专注Python开发'
+SITE_NAME = '麦子首页'
+SITE_DESC = '麦子官网'
+SITE_KEY = '麦子'
 
 
 

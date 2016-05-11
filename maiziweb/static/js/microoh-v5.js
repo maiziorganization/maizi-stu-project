@@ -53,10 +53,11 @@ $(function(){
   })
 
   //创建班级
-  
+
   //search
   $('#search').on({
     click: function(event) {
+        //alert($('#search').val());
       event.stopPropagation();
     },
     focus: function() {
@@ -66,15 +67,50 @@ $(function(){
     },
     keyup:function() {
       $('#hotkeyword').slideUp();
+        var name = $("#search").val();
+        if(name!=''){
+            $.get("rkSearch", {"name": name}, function(data){
+            if(data.message!=[]){
+                var str='';
+                for(var i=0 ;i<data.length;i++){
+                    str +='<a href="" style="background-color:'+data[i].color+';" >'+data[i].name+'</a>';
+                }
+                if(str!=''){
+                    $("#word a").remove();
+                    $("#word").append(str);
+                }
+            }
+        })
+        }
       $('#keyword-group').slideDown();
     }
-  })
+  });
+
   $('.search-dp').click(function(event) {
     event.stopPropagation();
   });
+
   $('#hotkeyword a').click(function(event) {
     event.preventDefault();
     $('#search').val($(this).text());
+      $('#hotkeyword').slideUp();
+        var name = $("#search").val();
+        var str='';
+        if(name!=''){
+            $.get("rkSearch", {"name": name}, function(data){
+
+            if(data.message!=[]){
+
+                for(var i=0 ;i<data.length;i++){
+                    str +='<a href="" style="background-color:'+data[i].color+';" >'+data[i].name+'</a>';
+                }
+                if(str!=''){
+                    $("#word a").remove();
+                    $("#word").append(str);
+                }
+            }
+            })
+        }
     $('#hotkeyword').slideUp();
     $('#keyword-group').slideDown();
   });
@@ -151,4 +187,51 @@ function v5_popover_tpl(tpl_class,elem,popover_container,popover_placement,popov
     html: true
   });
 }
+
+
+    $(function () {
+        //大图切换
+        var carousel = $("#carousel").featureCarousel({
+            topPadding: 0,
+            sidePadding: 0,
+            smallFeatureOffset: 100,
+            trackerSummation: false
+        });
+        //首页名师切换
+        $('#foo').carouFredSel({
+            auto: false,
+            prev: '#prev',
+            next: '#next',
+            mousewheel: true,
+            items: {
+                visible: 4,
+                minimum: 1
+            },
+            scroll: {
+                items: 1,
+                duration: 1000
+            }
+        });
+
+        //登录后
+        function show_card() {
+            var _parent_left = $('.v5-topbar-login').offset().left;
+            var _parent_outw = $('.v5-topbar-login').outerWidth();
+            var _this_outw = $('.show-card').outerWidth();
+            var _this_left = Math.abs(_parent_left - (_this_outw - _parent_outw));
+            $('.show-card').css({
+                'left': _this_left
+            })
+        }
+
+        show_card();
+        $(window).resize(function () {
+            show_card();
+        });
+
+        $('.scroll-pane').jScrollPane({
+            autoReinitialise: true
+        });
+    });
+
 

@@ -7,9 +7,11 @@ Created on 2015/11/3
 Common模块View业务处理。
 """
 
-from django.shortcuts import render
-from models import Ad,Course
+from django.shortcuts import render,redirect,HttpResponse
+from models import Ad,Course,RecommendKeywords,CareerCourse
 from django.conf import settings
+from django.core.serializers import serialize
+import json
 
 import logging
 
@@ -18,9 +20,16 @@ logger = logging.getLogger('maizi.common.views')
 def global_setting(request):
     # 站点基本信息
     SITE_KEY = settings.SITE_KEY
+    #站点地址
     SITE_URL = settings.SITE_URL
+    #站点主题
     SITE_NAME = settings.SITE_NAME
+    #站点描述
     SITE_DESC = settings.SITE_DESC
+    #站点推荐搜索关键词
+    RecKey = RecommendKeywords.objects.all()
+    #所有课程信息
+    AllCourse = CareerCourse.objects.all()
     # # 分类信息获取（导航数据）
     # category_list = Category.objects.all()[:6]
     # # 文章归档数据
@@ -47,5 +56,21 @@ def index(request):
     ad_list = Ad.objects.all()
     course_list = Course.objects.all()
     return render(request, "common/index.html", locals())
+
+def rkSearch(request):
+    name = request.GET['name']
+    print name
+    print "11"
+    data = []
+    keywords = CareerCourse.objects.filter(search_keywords__name__icontains=name)
+    print keywords
+    for i in keywords:
+        print i.name
+        print i.course_color
+        data.append({'name': i.name,
+                     'color':i.course_color})
+    return HttpResponse(json.dumps(data), content_type="application/json")
+
+
 
 

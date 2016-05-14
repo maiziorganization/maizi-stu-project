@@ -20,7 +20,6 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from django.conf import settings
 #from blog.upload import upload_image
-from maizi.common.views import index
 urlpatterns = [
     #下载文件路由配置
     url(r"uploads/(?P<path>.*)$",

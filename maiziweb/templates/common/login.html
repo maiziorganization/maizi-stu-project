@@ -9,10 +9,13 @@
             </div>
             <div class="modal-body">
                 <section class="box-login v5-input-txt" id="box-login">
+{#                    <form method="post"  >#}
+                        {% csrf_token %}
                     <ul>
-                        <li class="form-group has-error"><input type="text" class="form-control"
-                                                                placeholder="请输入邮箱账号/手机号"></li>
-                        <li class="form-group"><input type="password" class="form-control" placeholder="请输入密码"></li>
+                        <li class="form-group has-error">
+
+                                {{ login_form.username }}
+                                {{ login_form.password }}
                     </ul>
                     <p class="good-tips"><a href="#" data-toggle="modal" data-target="#forgetpswModal" id="btnForgetpsw"
                                             class="fr">忘记密码？</a>还没有账号？<a href="" data-toggle="modal"
@@ -20,9 +23,10 @@
                     </p>
 
                     <div>
-                        <button type="button" class="btn btn-micv5 btn-block">登录</button>
+                        <input type="submit" class="btn btn-micv5 btn-block" value="登录" id="login">
                     </div>
-                    <div class="tips-error bg-danger">错误提示</div>
+                    <div class="tips-error bg-danger" id="errorMessage" ></div>
+{#                    </form>#}
                 </section>
             </div>
         </div>

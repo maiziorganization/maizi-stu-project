@@ -27,30 +27,48 @@ $(function(){
     'shown.bs.modal': function (e) {
       $(this).find('.form-control').first().focus();
     }
-  })
+  });
   
   //登陆
   $('#btnLogin').on('click', function () {
     $('#registerModal').modal('hide');
-  })
+  });
   $('.show-card').on('click', function (event) {
     event.stopPropagation();
-  })
+  });
   $('.dt-username').on('click', function (event) {
     event.preventDefault();
     event.stopPropagation();
     $('.show-card').toggleClass('hidden slideInDown');
-  })
+  });
+  $('#login').on('click',function(){
+      var username = $("#username_id").val();
+      var password = $("#password_id").val();
+      var errorMessage = $("#errorMessage").val();
+      $.post("my_login", {Action:"post","username": username,"password":password}, function(data){
+          if(typeof(data.username) != "undefined"){
+              $('#loginModal').modal('hide');
+              document.getElementById("userLogin").style.display="none";
+              document.getElementById("userCenter").style.display="block";
+              document.getElementById("userMsg").style.display="block";
+              $("#userCenter").html(data.username);
+          }
+          else if(data.error!=''){
+              errorMessage=data.error;
+              $("#errorMessage").html(errorMessage);
+          }
+      })
+  });
 
   //忘记密码
   $('#btnForgetpsw').on('click', function () {
     $('#loginModal').modal('hide');
-  })
+  });
 
   //注册
   $('#btnRegister').on('click', function () {
     $('#loginModal').modal('hide');
-  })
+  });
 
   //创建班级
 
@@ -212,6 +230,7 @@ function v5_popover_tpl(tpl_class,elem,popover_container,popover_placement,popov
                 duration: 1000
             }
         });
+
 
         //登录后
         function show_card() {

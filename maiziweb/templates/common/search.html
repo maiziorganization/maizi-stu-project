@@ -35,8 +35,11 @@
             </div>
         </form>
         <!--登入窗口-->
+    <div></div>
+{#    {% if not user_login %}#}
         {% include 'common/logon.html' %}
-
+{#    {% elif user_login == 'ok'%}#}
+{#    {% endif %}#}
     </div>
     <!--搜索结果-->
     <div class="search-dp" id="keyword-group">

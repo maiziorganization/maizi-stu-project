@@ -8,8 +8,10 @@ Common模块View业务处理。
 """
 
 from django.shortcuts import render,redirect,HttpResponse
-from models import Ad,Course,RecommendKeywords,CareerCourse
+from models import Ad,Course,RecommendKeywords,CareerCourse,UserProfile
 from django.conf import settings
+from form import *
+from django.contrib.auth import logout, login, authenticate
 from django.core.serializers import serialize
 import json
 
@@ -30,6 +32,8 @@ def global_setting(request):
     RecKey = RecommendKeywords.objects.all()
     #所有课程信息
     AllCourse = CareerCourse.objects.all()
+    #登入表单信息
+    login_form = loginForm()
     # # 分类信息获取（导航数据）
     # category_list = Category.objects.all()[:6]
     # # 文章归档数据
@@ -51,25 +55,58 @@ def global_setting(request):
     # admin_recommend_list = Article.objects.all().order_by('-score')
     return locals()
 
-# 首页
+#
 def index(request):
     ad_list = Ad.objects.all()
     course_list = Course.objects.all()
     return render(request, "common/index.html", locals())
+#点击登入
+#首页
+def my_login(request):
+    ad_list = Ad.objects.all()
+    course_list = Course.objects.all()
+    reason = {"error": ""}
+    if request.method == "POST":
+        login_form = loginForm(request.POST)
+        if login_form.is_valid():
+            username = login_form.cleaned_data['username']
+            password = login_form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                user.backend = 'django.contrib.auth.backends.ModelBackend' # 指定默认的登录验证方式
+                login(request,user)
+                reason["username"] = username
+                return HttpResponse(json.dumps(reason), content_type="application/json")
+            else:
+                reason["error"]= "账号或密码错误，请重新输入"
+                return HttpResponse(json.dumps(reason), content_type="application/json")
+        else:
+            print "1"
+            reason["error"] = "账号密码不能为空"
+            return HttpResponse(json.dumps(reason), content_type="application/json")
+    else:
+        login_form = loginForm()
+        return render(request,"common/index.html", locals())
 
+#ajax同步搜索关键字查询功能
 def rkSearch(request):
     name = request.GET['name']
-    print name
-    print "11"
     data = []
     keywords = CareerCourse.objects.filter(search_keywords__name__icontains=name)
-    print keywords
     for i in keywords:
-        print i.name
-        print i.course_color
         data.append({'name': i.name,
                      'color':i.course_color})
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+
+
+#点击邮箱注册
+def register_email(request):
+    pass
+
+#点击手机注册
+def register_phone(request):
+    pass
 
 
 

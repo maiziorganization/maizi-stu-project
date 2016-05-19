@@ -323,15 +323,16 @@ class UserProfileManager(BaseUserManager):
     自定义用户管理器
     '''
 
-    def _create_user(self, username, email, password,
+    def _create_user(self, username, email, mobile, password,
                      is_staff, is_superuser, **extra_fields):
         '''
         根据用户名和密码创建一个用户
         '''
         now = datetime.now()
-        if not email:
-            raise ValueError(u'Email必须填写')
-        user = self.model(username=username,email=email,
+        # print "emaaaa"
+        # if not email:
+        #     raise ValueError(u'Email必须填写')
+        user = self.model(username=username,email=email,mobile=mobile,
                           is_staff=is_staff, is_active=True,
                           is_superuser=is_superuser, last_login=now,
                           date_joined=now, **extra_fields)
@@ -339,8 +340,8 @@ class UserProfileManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
-        return self._create_user(email, email, password, False, False,
+    def create_user(self, username,email,mobile, password=None, **extra_fields):
+        return self._create_user(username,email, mobile, password, False, False,
                                  **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):

@@ -69,6 +69,57 @@ $(function(){
   $('#btnRegister').on('click', function () {
     $('#loginModal').modal('hide');
   });
+  //邮箱短信注册
+  $('#registerLogin').on('click',function(){
+
+      var name = document.getElementById("register-mobile").className;
+      //邮件
+      if(name == "tab-pane"){
+          var register_email = $("#registerEmail").val();
+          var register_email_password = $("#registerEmailPassword").val();
+          var register_email_check = $("#registerEmailCheck").val();
+          var registerError = $("#registerError").val();
+          $.post("register_email", {"email": register_email,"password":register_email_password,"check":register_email_check}, function(data){
+              if(typeof(data.username) != "undefined"){
+                  $('#loginModal').modal('hide');
+                  $('#registerModal').modal('hide');
+                  document.getElementById("userLogin").style.display="none";
+                  document.getElementById("userCenter").style.display="block";
+                  document.getElementById("userMsg").style.display="block";
+                  $("#userCenter").html(data.username);
+              }
+              else if(data!=''){
+                  var error_message = data.error;
+                  $("#registerError").html(error_message);
+              }
+          })
+      }
+      //短信
+      else if(name == "tab-pane active"){
+          var reg_mob = $("#reg_mob").val();
+          alert(reg_mob);
+          var reg_password = $("#reg_password").val();
+          var check_phone = $("#check_phone").val();
+          var mbl_chk = $("#mbl_chk").val();
+          var registerError = $("#registerError").val();
+          $.post("register_phone", {"phone": reg_mob,"password":reg_password,"checkPhone":check_phone,"check":mbl_chk}, function(data){
+              if(typeof(data.username) != "undefined"){
+                  $('#loginModal').modal('hide');
+                  $('#registerModal').modal('hide');
+                  document.getElementById("userLogin").style.display="none";
+                  document.getElementById("userCenter").style.display="block";
+                  document.getElementById("userMsg").style.display="block";
+                  $("#userCenter").html(data.username);
+              }
+              else if(data!=''){
+                  var error_message = data.error;
+                  $("#registerError").html(error_message);
+              }
+          })
+      }
+  });
+
+
 
   //创建班级
 

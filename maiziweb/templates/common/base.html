@@ -33,11 +33,7 @@
 
 <body>
 <div class="microoh-main">
-    {% block header %}
-        <header class="navbar navbar-default navbar-fixed-top affix" data-offset-top="64">
-    {% endblock %}
-    {% include 'common/search.html' %}
-    </header>
+{% include 'common/search.html' %}
     {% block second_header %}{% endblock %}
     {% block breadcrumb %}{% endblock %}
     {% block container %}{% endblock %}

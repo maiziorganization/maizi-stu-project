@@ -7,8 +7,8 @@ Created on 2015/11/3
 Common模块View业务处理。
 """
 
-from django.shortcuts import render,redirect,HttpResponse
-from models import Ad,Course,RecommendKeywords,CareerCourse,UserProfile
+from django.shortcuts import render, redirect, HttpResponse
+from models import Ad, Course, RecommendKeywords, CareerCourse, UserProfile
 from django.conf import settings
 from form import *
 from django.contrib.auth import logout, login, authenticate
@@ -21,14 +21,15 @@ import logging
 from django.contrib.auth.hashers import (
     check_password, is_password_usable, make_password,
 )
-
+#开源地址
+#https://github.com/shenjiawei19/maizi-stu-project
 logger = logging.getLogger('maizi.common.views')
 
 #提取错误信息
 def error_message(error):
     way1=r'<ul class="errorlist"><li>(.*?)<ul class="errorlist"><li>(.*?)</li></ul>'
-    error_info = re.compile(way1,re.S)
-    items = re.findall(error_info,error)
+    error_info = re.compile(way1, re.S)
+    items = re.findall(error_info, error)
     return items[0][1]
 
 
@@ -51,6 +52,8 @@ def global_setting(request):
     register_email = registerEmailForm()
     #手机注册表单信息
     register_phone = registerMobileForm()
+    #密码找回
+    reg_password = RgForm()
     return locals()
 
 #首页
@@ -184,6 +187,39 @@ def register_phone(request):
         reason = {"error": "注册失败，请重试"}
         return HttpResponse(json.dumps(reason), content_type="application/json")
 
+#密码找回功能
+@csrf_exempt
+def reg_password(request):
+    reason = {"error": ""}
+    if request.method == "POST":
+        print "123"
+        reg_pass = RgForm(request.POST)
+        if reg_pass.is_valid():
+            username = reg_pass.cleaned_data['reg']
+            phone = re.compile('^1[358]\d{9}$|^176\d{8}')
+            email = re.compile("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$")
+            phone_match = phone.match(username)
+            email_match = email.match(username)
+            if not phone_match and not email_match:
+                reason = {"error": "格式错误，请重试"}
+                return HttpResponse(json.dumps(reason), content_type="application/json")
+            try:
+                if not UserProfile.objects.get(username=username):
+                    reason = {"error": "用户不存在"}
+                    return HttpResponse(json.dumps(reason), content_type="application/json")
+                else:
+                    reason["username"] = username
+                    return HttpResponse(json.dumps(reason), content_type="application/json")
+            except:
+                reason = {"error": "用户不存在"}
+                return HttpResponse(json.dumps(reason), content_type="application/json")
+        else:
+            # pdb.set_trace()
+            reason = {"error": error_message(str(reg_pass.errors))}
+            return HttpResponse(json.dumps(reason), content_type="application/json")
+    else:
+        reason = {"error": "输入失败，请重试"}
+        return HttpResponse(json.dumps(reason), content_type="application/json")
 
 
 

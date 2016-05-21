@@ -62,12 +62,26 @@ $(function(){
 
   //忘记密码
   $('#btnForgetpsw').on('click', function () {
-    $('#loginModal').modal('hide');
+      $('#loginModal').modal('hide');
   });
 
+  $('#reg_password').on('click', function () {
+      var reg = $("#rg_password").val();
+      $.post("reg_password", {"reg": reg}, function(data){
+              if(typeof(data.username) != "undefined"){
+                  alert("验证码已发送");
+                  $('#forgetpswModal').modal('hide');
+              }
+              else if(data!=''){
+                  var error_message = data.error;
+                  $("#error2").html(error_message);
+              }
+          })
+
+  });
   //注册
   $('#btnRegister').on('click', function () {
-    $('#loginModal').modal('hide');
+      $('#loginModal').modal('hide');
   });
   //邮箱短信注册
   $('#registerLogin').on('click',function(){
@@ -94,11 +108,10 @@ $(function(){
               }
           })
       }
-      //短信
+      //手机
       else if(name == "tab-pane active"){
           var reg_mob = $("#reg_mob").val();
-          alert(reg_mob);
-          var reg_password = $("#reg_password").val();
+          var reg_password = $("#phone_password").val();
           var check_phone = $("#check_phone").val();
           var mbl_chk = $("#mbl_chk").val();
           var registerError = $("#registerError").val();

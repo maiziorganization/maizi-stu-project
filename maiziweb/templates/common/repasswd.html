@@ -10,13 +10,12 @@
             <div class="modal-body">
                 <section class="box-forgetpsw v5-input-txt" id="box-forgetpsw">
                     <ul>
-                        <li class="form-group has-error"><input type="text" class="form-control"
-                                                                placeholder="请输入注册邮箱账号或手机号码"></li>
+                        <li class="form-group has-error">{{ reg_password.reg }}</li>
                     </ul>
                     <div>
-                        <button type="button" class="btn btn-micv5 btn-block">提交</button>
+                        <input type="submit" class="btn btn-micv5 btn-block" value="提交" id="reg_password">
                     </div>
-                    <div class="tips-error bg-danger">错误提示</div>
+                    <div class="tips-error bg-danger" id="error2"></div>
                 </section>
             </div>
         </div>

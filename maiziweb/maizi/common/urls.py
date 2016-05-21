@@ -8,13 +8,14 @@ common模块的url配置。
 """
 
 from django.conf.urls import patterns, url
-from maizi.common.views import rkSearch,my_login,index,lesson,register_email,register_phone
+from maizi.common.views import rkSearch, my_login, index, lesson, register_email, register_phone,reg_password
 
 urlpatterns = [
     url(r'^$', index, name='index'),
-    url(r'rkSearch$',rkSearch,name='rkSearch'),
-    url(r'my_login$',my_login,name='my_login'),
-    url(r'lesson$',lesson,name='lesson'),
-    url(r'register_email',register_email,name='register_email'),
-    url(r'register_phone',register_phone,name='register_phone'),
+    url(r'rkSearch$', rkSearch, name='rkSearch'),
+    url(r'my_login$', my_login, name='my_login'),
+    url(r'lesson$', lesson, name='lesson'),
+    url(r'register_email', register_email, name='register_email'),
+    url(r'register_phone', register_phone, name='register_phone'),
+    url(r'reg_password', reg_password, name='reg_password'),
 ]

@@ -225,7 +225,7 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False
         },
-        'blog.views': {
+        'maizi.common.views': {
             'handlers': ['default', 'error'],
             'level': 'DEBUG',
             'propagate': True

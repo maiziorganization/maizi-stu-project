@@ -35,9 +35,14 @@ class registerMobileForm(forms.Form):
         attrs={'type': 'text','class': 'form-control','placeholder':'请输入短信验证码', 'id': 'check_phone'}),
         error_messages={'required':'请输入手机验证码'})
     password = forms.CharField(widget=forms.TextInput(
-        attrs={'type':'password','class':'form-control','placeholder':'请输入密码', 'id': 'reg_password'}),
+        attrs={'type':'password','class':'form-control','placeholder':'请输入密码', 'id': 'phone_password'}),
         error_messages={'required': '密码不能为空', 'invalid': '请输入至少8位密码', 'min_length': '请输入至少8位密码', 'max_length':'最多为50位密码'},
         min_length=8,max_length=50)
     check = forms.CharField(widget=forms.TextInput(
         attrs={'type': 'text','class': 'form-control form-control-captcha fl', 'placeholder': '请输入验证码', 'id': 'mbl_chk'}),
         error_messages={'required': '验证码不能为空'})
+
+class RgForm(forms.Form):
+    reg = forms.CharField(widget=forms.TextInput(
+        attrs={'type': 'text', 'class': 'form-control', 'placeholder': '请输入注册邮箱账号或手机号码', 'id': 'rg_password'}),
+        error_messages={'required': '邮箱账号或手机号码不能为空'})
